@@ -1,0 +1,29 @@
+# SolarArc Pro - 开发环境Dockerfile
+# 支持热重载和源码挂载
+
+FROM python:3.10-slim
+
+# 设置工作目录
+WORKDIR /app/backend
+
+# 安装系统依赖
+RUN apt-get update && apt-get install -y \
+    gcc \
+    libgeos-dev \
+    libproj-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# 复制并安装Python依赖
+COPY backend/requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt \
+    && pip install watchdog[medusa]  # 用于更好的文件监控
+
+# 复制应用代码
+COPY backend/app ./app
+COPY backend/main.py .
+
+# 开发环境不需要暴露端口，因为使用--reload启动
+# 但可以暴露用于健康检查
+EXPOSE 8000
+
+# 开发服务器启动命令将在docker-compose.yml中定义
