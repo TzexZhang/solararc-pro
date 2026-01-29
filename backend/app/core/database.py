@@ -61,7 +61,7 @@ async def init_db():
     try:
         async with engine.begin() as conn:
             # 导入所有模型以确保它们被注册
-            from app.models import building, shadow_analysis
+            from app.models import building, shadow_analysis, solar_position, user_settings
 
             # 创建所有表
             await conn.run_sync(Base.metadata.create_all)

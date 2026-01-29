@@ -21,7 +21,7 @@ class Settings(BaseSettings):
 
     # 数据库配置
     DATABASE_URL: str = Field(
-        default="mysql+pymysql://solararc:solararc_pass_2026@localhost:3306/solararc_pro?charset=utf8mb4"
+        default="mysql+pymysql://root:root@localhost:3306/solararc_pro?charset=utf8mb4"
     )
     DB_POOL_SIZE: int = 10
     DB_MAX_OVERFLOW: int = 5
@@ -99,9 +99,14 @@ class Settings(BaseSettings):
     MAX_EXPORT_RECORDS: int = 10000
 
     class Config:
-        env_file = ".env"
+        # 尝试多个可能的.env文件位置
+        env_file = [
+            ".env",                     # backend目录
+            "../.env",                  # 上级目录（如果从子目录运行）
+        ]
         env_file_encoding = "utf-8"
         case_sensitive = True
+        extra = "ignore"  # 忽略额外的环境变量
 
     @property
     def cors_origins_list(self) -> List[str]:
