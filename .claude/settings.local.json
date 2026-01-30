@@ -14,7 +14,11 @@
       "Bash(timeout:*)",
       "Bash(where:*)",
       "Bash(C:\\\\Users\\\\ztz\\\\AppData\\\\Local\\\\Microsoft\\\\WindowsApps\\\\python.exe:*)",
-      "Bash(\"/c/Users/ztz/AppData/Local/Microsoft/WindowsApps/python.exe\" --version)"
+      "Bash(\"/c/Users/ztz/AppData/Local/Microsoft/WindowsApps/python.exe\" --version)",
+      "Bash(.venv/Scripts/python.exe:*)",
+      "Bash(.venv/Scripts/pip.exe install:*)",
+      "Bash(powershell:*)",
+      "Bash(xargs kill:*)"
     ]
   }
 }

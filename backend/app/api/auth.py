@@ -55,18 +55,18 @@ async def register(user_data: UserCreate, db: Session = Depends(get_db)):
 
 @router.post("/login", response_model=dict)
 async def login(
-    form_data: OAuth2PasswordRequestForm = Depends(),
+    user_data: UserLogin,
     db: Session = Depends(get_db)
 ):
     """
     Login with email and password
 
-    - **username**: Email address
+    - **email**: Email address
     - **password**: Password
 
     Returns JWT token valid for 7 days
     """
-    user, error_msg = authenticate_user(form_data.username, form_data.password, db)
+    user, error_msg = authenticate_user(user_data.email, user_data.password, db)
 
     if user is None:
         raise HTTPException(

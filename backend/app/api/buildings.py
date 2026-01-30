@@ -30,39 +30,44 @@ async def get_buildings_in_bbox(
     Returns all buildings whose footprint intersects with the specified bounding box.
     """
     try:
-        # Create bounding box geometry
-        bbox = ST_MakeEnvelope(min_lng, min_lat, max_lng, max_lat, 4326)
+        from sqlalchemy import text
 
-        # Query buildings within bbox
-        buildings = db.query(Building).filter(
-            ST_Intersects(Building.footprint, bbox)
-        ).all()
+        # MySQL 8.0: Extract coordinates and compare numerically since ST_MakeEnvelope doesn't support geographic SRID
+        # MySQL spatial functions use (lat, lng) format for all geometry types
+        sql = f"""
+            SELECT id, name, building_type, total_height, floor_area, floor_count,
+                   reflective_rate, address, district, city,
+                   ST_AsGeoJSON(footprint) as footprint,
+                   created_at, updated_at
+            FROM buildings
+            WHERE MBRIntersects(
+                footprint,
+                ST_GeomFromText('POLYGON(({min_lat} {min_lng}, {min_lat} {max_lng}, {max_lat} {max_lng}, {max_lat} {min_lng}, {min_lat} {min_lng}))', 4326)
+            )
+        """
 
-        # Convert to response format
+        result = db.execute(text(sql))
+
         building_responses = []
-        for building in buildings:
-            # Convert footprint to GeoJSON
-            footprint_shape = to_shape(building.footprint)
-            footprint_geojson = {
-                "type": "Polygon",
-                "coordinates": [list(footprint_shape.exterior.coords)]
-            }
+        for row in result:
+            import json
+            footprint_geojson = json.loads(row[10]) if row[10] else None
 
-            building_responses.append(BuildingResponse(
-                id=building.id,
-                name=building.name,
-                building_type=building.building_type,
-                footprint=footprint_geojson,
-                total_height=float(building.total_height),
-                floor_area=float(building.floor_area) if building.floor_area else None,
-                floor_count=building.floor_count,
-                reflective_rate=float(building.reflective_rate),
-                address=building.address,
-                district=building.district,
-                city=building.city,
-                created_at=building.created_at,
-                updated_at=building.updated_at
-            ))
+            building_responses.append({
+                "id": row[0],
+                "name": row[1],
+                "building_type": row[2],
+                "total_height": float(row[3]),
+                "floor_area": float(row[4]) if row[4] else None,
+                "floor_count": row[5],
+                "reflective_rate": float(row[6]),
+                "address": row[7],
+                "district": row[8],
+                "city": row[9],
+                "footprint": footprint_geojson,
+                "created_at": row[11].isoformat() if row[11] else None,
+                "updated_at": row[12].isoformat() if row[12] else None
+            })
 
         return {
             "code": 200,

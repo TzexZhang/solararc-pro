@@ -1,7 +1,7 @@
 """
 User Models
 """
-from sqlalchemy import Column, String, Boolean, Integer, DateTime, Text, Enum as SQLEnum
+from sqlalchemy import Column, String, Boolean, Integer, DateTime, Text, ForeignKey, Enum as SQLEnum
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.mysql import VARCHAR
 from datetime import datetime
@@ -51,7 +51,7 @@ class User(Base):
     )
 
     # Relationships
-    password_resets = relationship("PasswordReset", back_populates="user", cascade="all, delete-orphan")
+    password_resets = relationship("PasswordReset", back_populates="user", cascade="all, delete-orphan", foreign_keys="PasswordReset.user_id")
     projects = relationship("Project", back_populates="user", cascade="all, delete-orphan")
     analysis_reports = relationship("AnalysisReport", back_populates="user", cascade="all, delete-orphan")
 
@@ -65,7 +65,7 @@ class PasswordReset(Base):
     __tablename__ = "password_resets"
 
     id = Column(VARCHAR(36), primary_key=True, default=generate_uuid, comment="重置ID（UUID）")
-    user_id = Column(VARCHAR(36), nullable=False, index=True, comment="用户ID")
+    user_id = Column(VARCHAR(36), ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True, comment="用户ID")
     token = Column(VARCHAR(255), unique=True, nullable=False, index=True, comment="重置令牌")
     expires_at = Column(DateTime, nullable=False, index=True, comment="过期时间")
     used = Column(Boolean, default=False, comment="是否已使用")
