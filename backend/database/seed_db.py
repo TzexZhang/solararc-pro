@@ -270,7 +270,7 @@ def main():
     print("数据库已包含 demo 数据，可以启动后端服务测试")
     print()
     print("命令提示：")
-    print("  启动后端：cd .. && python start.py")
+    print("  启动后端：cd .. && python main.py")
     print("  访问 API 文档: http://localhost:8000/api/docs")
 
 

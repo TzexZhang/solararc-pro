@@ -330,7 +330,7 @@ def main():
     print("数据库已准备就绪，可以启动后端服务")
     print()
     print("命令提示：")
-    print("  启动后端：cd .. && python start.py")
+    print("  启动后端：cd .. && python main.py")
     print("  插入数据：python seed_db.py")
 
 

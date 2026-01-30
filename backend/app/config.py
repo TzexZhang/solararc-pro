@@ -18,7 +18,7 @@ class Settings(BaseSettings):
     db_max_overflow: int = Field(default=5, description="Database connection pool max overflow")
 
     # API
-    api_host: str = Field(default="0.0.0.0", description="API host")
+    api_host: str = Field(default="127.0.0.1", description="API host")
     api_port: int = Field(default=8000, description="API port")
     api_v1_prefix: str = Field(default="/api/v1", description="API v1 prefix")
 

@@ -1,7 +1,7 @@
 """
 Building Score Models
 """
-from sqlalchemy import Column, String, Integer, Numeric, DateTime, ForeignKey, SQLEnum, JSON
+from sqlalchemy import Column, String, Integer, Numeric, DateTime, ForeignKey, Enum as SQLEnum, JSON
 from sqlalchemy.dialects.mysql import VARCHAR
 from sqlalchemy.orm import relationship
 from datetime import datetime

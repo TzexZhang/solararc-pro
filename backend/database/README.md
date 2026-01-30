@@ -38,27 +38,13 @@ seed_db.bat
 - 插入示例分析报告
 
 #### 3. 启动后端服务
-在 `backend` 目录下双击运行 `start.bat`：
+
+在 `backend` 目录下运行：
 ```cmd
-start.bat
+python main.py
 ```
 
-**功能：**
-- 自动创建虚拟环境（如果不存在）
-- 安装依赖包
-- 检查配置文件
-- 启动FastAPI服务器
-
-#### 4. 一键启动（推荐）
-在 `backend` 目录下双击运行 `setup.bat`：
-```cmd
-setup.bat
-```
-
-**功能：**
-- 自动执行数据库初始化
-- 自动插入demo数据
-- 自动启动后端服务
+服务器将在 `http://127.0.0.1:8000` 启动。
 
 ---
 
@@ -148,16 +134,9 @@ python seed_db.py --yes
 
 ## 文件说明
 
-### 批处理脚本（Windows）
-- `init_db.bat` - 数据库初始化脚本
-- `seed_db.bat` - Demo数据插入脚本
-- `start.bat` - 后端启动脚本（位于backend目录）
-- `setup.bat` - 一键启动脚本（位于backend目录）
-
 ### Python脚本（跨平台）
 - `init_db.py` - 数据库初始化脚本
 - `seed_db.py` - Demo数据插入脚本
-- `start.py` - 后端启动脚本（位于backend目录）
 
 ### SQL文件
 - `01_init_tables.sql` - 数据库表结构定义

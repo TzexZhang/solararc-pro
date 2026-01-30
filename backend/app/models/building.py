@@ -1,14 +1,24 @@
 """
 Building Models
 """
-from sqlalchemy import Column, String, Integer, Numeric, DateTime, Text, SQLEnum
-from geoalchemy2 import Polygon
+from sqlalchemy import Column, String, Integer, Numeric, DateTime, Text, Enum as SQLEnum
 from sqlalchemy.dialects.mysql import VARCHAR
 from datetime import datetime
 import enum
 import uuid
 
 from app.database import Base
+
+# Import geoalchemy2 elements
+try:
+    from geoalchemy2.elements import Polygon
+except ImportError:
+    try:
+        from geoalchemy2.types import Polygon
+    except ImportError:
+        # Last resort - import Geometry and use as Polygon
+        from geoalchemy2 import Geometry
+        Polygon = Geometry
 
 
 def generate_uuid() -> str:

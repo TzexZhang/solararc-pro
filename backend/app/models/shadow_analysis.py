@@ -1,14 +1,24 @@
 """
 Shadow Analysis Models
 """
-from sqlalchemy import Column, String, Date, Integer, Numeric, DateTime, ForeignKey
-from geoalchemy2 import Polygon
+from sqlalchemy import Column, String, Integer, Numeric, DateTime, Date, ForeignKey
 from sqlalchemy.dialects.mysql import VARCHAR
 from sqlalchemy.orm import relationship
 from datetime import datetime
 import uuid
 
 from app.database import Base
+
+# Import geoalchemy2 elements
+try:
+    from geoalchemy2.elements import Polygon
+except ImportError:
+    try:
+        from geoalchemy2.types import Polygon
+    except ImportError:
+        # Last resort - import Geometry and use as Polygon
+        from geoalchemy2 import Geometry
+        Polygon = Geometry
 
 
 def generate_uuid() -> str:
@@ -24,7 +34,7 @@ class ShadowAnalysisCache(Base):
     id = Column(VARCHAR(36), primary_key=True, default=generate_uuid, comment="缓存ID（UUID）")
 
     # Analysis parameters
-    building_id = Column(VARCHAR(36), nullable=False, index=True, comment="建筑ID")
+    building_id = Column(VARCHAR(36), ForeignKey("buildings.id", ondelete="CASCADE"), nullable=False, index=True, comment="建筑ID")
     analysis_date = Column(Date, nullable=False, comment="分析日期")
     analysis_hour = Column(Integer, nullable=False, comment="分析小时")
 
@@ -35,6 +45,9 @@ class ShadowAnalysisCache(Base):
     # Cache metadata
     created_at = Column(DateTime, default=datetime.utcnow, comment="创建时间")
     expires_at = Column(DateTime, nullable=False, index=True, comment="缓存过期时间")
+
+    # Relationships
+    building = relationship("Building", backref="shadow_analyses")
 
     def __repr__(self):
         return f"<ShadowAnalysisCache(id={self.id}, building_id={self.building_id}, date={self.analysis_date})>"

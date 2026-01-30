@@ -1,7 +1,7 @@
 """
 Analysis Report Models
 """
-from sqlalchemy import Column, String, Date, Integer, Numeric, DateTime, ForeignKey, Text, JSON, SQLEnum
+from sqlalchemy import Column, String, Date, Integer, Numeric, DateTime, ForeignKey, Text, JSON, Enum as SQLEnum
 from sqlalchemy.dialects.mysql import VARCHAR
 from sqlalchemy.orm import relationship
 from datetime import datetime

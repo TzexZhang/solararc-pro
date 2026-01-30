@@ -2,7 +2,7 @@
 Shadow Calculation API Routes
 """
 import time
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException, status, Depends
 from sqlalchemy.orm import Session
 from typing import List
 
