@@ -1,0 +1,23 @@
+.home-page {
+  min-height: 100vh;
+}
+
+.content {
+  overflow: hidden;
+}
+
+.map-wrapper {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 64px);
+}
+
+@media (max-width: 768px) {
+  .home-page .content {
+    margin-left: 0 !important;
+  }
+
+  .map-wrapper {
+    height: calc(100vh - 128px);
+  }
+}

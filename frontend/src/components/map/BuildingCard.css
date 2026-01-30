@@ -1,0 +1,50 @@
+.building-card {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  min-width: 320px;
+  max-width: 400px;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+}
+
+.building-info-card {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+}
+
+.building-info-card .ant-card-head {
+  background: linear-gradient(135deg, #1890ff 0%, #52c41a 100%);
+  border-bottom: none;
+}
+
+.building-info-card .ant-card-head-title {
+  color: white;
+  font-weight: 600;
+}
+
+.building-info-card .ant-card-extra .ant-btn {
+  color: white;
+}
+
+.building-info-card .ant-card-extra .ant-btn:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.card-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+@media (max-width: 768px) {
+  .building-card {
+    top: auto;
+    bottom: 180px;
+    right: 20px;
+    left: 20px;
+    min-width: auto;
+    max-width: none;
+  }
+}

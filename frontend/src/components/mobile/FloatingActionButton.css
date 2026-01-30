@@ -1,0 +1,13 @@
+.fab-container {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 1000;
+}
+
+@media (max-width: 768px) {
+  .fab-container {
+    right: 16px;
+    bottom: 80px;
+  }
+}

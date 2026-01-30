@@ -1,0 +1,38 @@
+# FastAPI and ASGI server
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+gunicorn==21.2.0
+
+# Pydantic and settings
+pydantic==2.5.0
+pydantic-settings==2.1.0
+
+# Database
+sqlalchemy==2.0.23
+geoalchemy2==0.14.2
+pymysql==1.1.0
+cryptography==41.0.7
+alembic==1.12.1
+
+# Spatial and scientific computing
+shapely==2.0.2
+numpy==1.26.2
+pvlib==0.10.3
+astral==3.2
+
+# Authentication and security
+PyJWT==2.8.0
+passlib[bcrypt]==1.7.4
+python-jose[cryptography]==3.3.0
+python-multipart==0.0.6
+
+# Utilities
+python-dotenv==1.0.0
+email-validator==2.1.0
+
+# Report generation
+reportlab==4.0.7
+openpyxl==3.1.2
+
+# Additional utilities
+python-dateutil==2.8.2

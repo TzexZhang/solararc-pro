@@ -1,0 +1,38 @@
+.dashboard-page {
+  min-height: 100vh;
+}
+
+.content {
+  background: #f0f2f5;
+  min-height: calc(100vh - 64px - 70px);
+}
+
+.dashboard-content {
+  padding: 24px;
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  color: #333;
+}
+
+.chart-card {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .dashboard-page .content {
+    margin-left: 0 !important;
+  }
+
+  .dashboard-content {
+    padding: 16px;
+  }
+
+  .page-title {
+    font-size: 20px;
+  }
+}
