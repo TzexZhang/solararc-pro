@@ -25,3 +25,197 @@
 .mapboxgl-popup-close-button:hover {
   color: #333;
 }
+
+/* 旋转提示 */
+.rotate-hint {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 16px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  pointer-events: none;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* 时间控制面板 */
+.time-control-panel {
+  position: absolute;
+  top: 20px;
+  right: 60px;
+  z-index: 999;
+  width: 280px;
+}
+
+.time-control-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.control-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1890ff;
+  margin-bottom: 16px;
+}
+
+.control-section {
+  margin-bottom: 12px;
+}
+
+.control-section:last-child {
+  margin-bottom: 0;
+}
+
+.section-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #595959;
+  margin-bottom: 8px;
+}
+
+/* 深色模式适配 */
+[data-theme='dark'] .time-control-card {
+  background: rgba(30, 30, 30, 0.95);
+  border: 1px solid #434343;
+}
+
+[data-theme='dark'] .control-header {
+  color: #177ddc;
+}
+
+[data-theme='dark'] .section-label {
+  color: #d9d9d9;
+}
+
+/* 地图信息覆盖层 */
+.map-info-overlay {
+  position: absolute;
+  bottom: 80px;
+  left: 20px;
+  z-index: 999;
+}
+
+.map-info-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  min-width: 200px;
+  animation: slideInLeft 0.3s ease-out;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+}
+
+.info-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.info-item:first-child {
+  padding-top: 0;
+}
+
+.info-item:hover {
+  background: rgba(24, 144, 255, 0.05);
+  margin: 0 -20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.info-label {
+  font-size: 13px;
+  color: #8c8c8c;
+  font-weight: 500;
+}
+
+.info-value {
+  font-size: 14px;
+  color: #262626;
+  font-weight: 600;
+}
+
+/* 深色模式适配 */
+[data-theme='dark'] .map-info-card {
+  background: rgba(30, 30, 30, 0.95);
+  border: 1px solid #434343;
+}
+
+[data-theme='dark'] .info-item {
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme='dark'] .info-item:hover {
+  background: rgba(23, 125, 220, 0.08);
+}
+
+[data-theme='dark'] .info-label {
+  color: #595959;
+}
+
+[data-theme='dark'] .info-value {
+  color: #d9d9d9;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .time-control-panel {
+    top: auto;
+    bottom: 80px;
+    right: 16px;
+    width: calc(100% - 32px);
+    max-width: 320px;
+  }
+
+  .map-info-overlay {
+    bottom: 200px;
+    left: 16px;
+    right: 16px;
+  }
+
+  .map-info-card {
+    min-width: auto;
+  }
+}
+

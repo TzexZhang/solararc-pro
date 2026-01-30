@@ -4,6 +4,7 @@ import { EyeOutlined, DeleteOutlined, DownloadOutlined } from '@ant-design/icons
 import { useNavigate } from 'react-router-dom'
 import { Header, Sidebar, Footer } from '@/components/layout'
 import { useReports, useDeleteReport, useExportReport } from '@/hooks'
+import { useMapStore } from '@/store'
 import type { AnalysisReport } from '@/types'
 import { formatDate, scoreToGrade } from '@/utils/format'
 import './ReportsPage.css'

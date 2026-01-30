@@ -24,10 +24,17 @@ dist-ssr
 *.sw?
 
 # Environment variables
-# .env
-# .env.local
-# .env.production
-# .env.development
+# .env.local - 本地环境变量配置（不提交到版本控制）
+# .env.production.local - 生产环境本地配置（不提交到版本控制）
+# .env.development.local - 开发环境本地配置（不提交到版本控制）
+.env.local
+.env.*.local
+
+# 以下文件应该被提交到版本控制（包含非敏感的配置）
+# .env.development - 开发环境配置
+# .env.production - 生产环境配置
+
+
 
 # Build output
 build

@@ -5,11 +5,29 @@
   transform: translateX(-50%);
   z-index: 1000;
   background: rgba(255, 255, 255, 0.95);
-  padding: 16px 24px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(10px);
+  padding: 20px 28px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(0, 0, 0, 0.04);
   min-width: 400px;
+  animation: slideUp 0.3s ease-out;
+  transition: all 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.timeline-container:hover {
+  box-shadow: 0 6px 24px rgba(24, 144, 255, 0.15);
 }
 
 .timeline-header {
@@ -26,33 +44,79 @@
 .time-display {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   margin-bottom: 12px;
   font-size: 16px;
   font-weight: 600;
   color: #1890ff;
+  transition: all 0.3s ease;
+}
+
+.time-display:hover {
+  transform: scale(1.02);
 }
 
 .current-time {
-  font-size: 18px;
+  font-size: 20px;
+  font-weight: 700;
 }
 
 .hour-slider {
-  margin: 8px 0;
+  margin: 12px 0;
 }
 
+/* 优化滑块样式 */
 .ant-slider-track {
-  background: linear-gradient(to right, #1890ff, #52c41a);
+  background: linear-gradient(to right, #1890ff, #52c41a) !important;
 }
 
 .ant-slider-handle {
-  border-color: #1890ff;
+  border-color: #1890ff !important;
+  box-shadow: 0 2px 8px rgba(24, 144, 255, 0.3) !important;
+  transition: all 0.3s ease !important;
+}
+
+.ant-slider-handle:hover,
+.ant-slider-handle:focus {
+  border-color: #40a9ff !important;
+  transform: scale(1.1) !important;
+  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.5) !important;
+}
+
+.ant-slider-rail {
+  background-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+/* 深色模式适配 */
+[data-theme='dark'] .timeline-container {
+  background: rgba(30, 30, 30, 0.95);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme='dark'] .time-display {
+  color: #177ddc;
+}
+
+[data-theme='dark'] .ant-slider-handle {
+  border-color: #177ddc !important;
+  box-shadow: 0 2px 8px rgba(23, 125, 220, 0.3) !important;
+}
+
+[data-theme='dark'] .ant-slider-handle:hover,
+[data-theme='dark'] .ant-slider-handle:focus {
+  border-color: #3c9ae8 !important;
+  box-shadow: 0 4px 12px rgba(23, 125, 220, 0.5) !important;
+}
+
+[data-theme='dark'] .ant-slider-rail {
+  background-color: rgba(255, 255, 255, 0.1) !important;
 }
 
 @media (max-width: 768px) {
   .timeline-container {
     min-width: calc(100vw - 40px);
     bottom: 80px;
+    padding: 16px 20px;
   }
 
   .timeline-header {
@@ -65,6 +129,6 @@
   }
 
   .current-time {
-    font-size: 16px;
+    font-size: 18px;
   }
 }

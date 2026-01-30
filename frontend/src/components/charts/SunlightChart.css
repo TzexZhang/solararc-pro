@@ -1,8 +1,17 @@
 .sunlight-chart-container {
-  background: white;
-  border-radius: 8px;
-  padding: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.sunlight-chart-container:hover {
+  box-shadow: 0 4px 20px rgba(24, 144, 255, 0.12);
+  transform: translateY(-2px);
 }
 
 .chart-loading {
@@ -10,5 +19,26 @@
   align-items: center;
   justify-content: center;
   height: 400px;
-  color: #999;
+  color: #8c8c8c;
+  font-size: 14px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* 深色模式适配 */
+[data-theme='dark'] .sunlight-chart-container {
+  background: rgba(30, 30, 30, 0.95);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme='dark'] .chart-loading {
+  color: #595959;
 }

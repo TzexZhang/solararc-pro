@@ -1,11 +1,13 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios'
 import { message } from 'antd'
 import { ApiError } from '@/types'
+import { API_BASE_URL, API_TIMEOUT } from '@/config'
+import { useAuthStore } from '@/store'
 
 // Create axios instance
 const request: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || '/api/v1',
-  timeout: 30000,
+  baseURL: API_BASE_URL,
+  timeout: API_TIMEOUT,
   headers: {
     'Content-Type': 'application/json'
   }
@@ -14,10 +16,22 @@ const request: AxiosInstance = axios.create({
 // Request interceptor
 request.interceptors.request.use(
   (config) => {
-    // Get token from localStorage
-    const token = localStorage.getItem('token')
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`
+    // Get token from zustand authStore (via localStorage)
+    const storedAuth = localStorage.getItem('auth-storage')
+    if (storedAuth) {
+      try {
+        const authData = JSON.parse(storedAuth)
+        const token = authData?.state?.token
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`
+        }
+      } catch (e) {
+        console.error('Failed to parse auth storage:', e)
+      }
+    }
+    // Fallback to old token storage for backwards compatibility
+    if (!config.headers.Authorization && localStorage.getItem('token')) {
+      config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
     }
     return config
   },
@@ -29,7 +43,9 @@ request.interceptors.request.use(
 // Response interceptor
 request.interceptors.response.use(
   (response: AxiosResponse) => {
-    return response.data
+    // Extract data field from API response if it exists
+    const { data } = response.data
+    return data !== undefined ? data : response.data
   },
   (error: AxiosError<ApiError>) => {
     if (error.response) {
@@ -38,11 +54,12 @@ request.interceptors.response.use(
       // Handle specific error codes
       switch (status) {
         case 401:
-          // Unauthorized - clear token and redirect to login
-          localStorage.removeItem('token')
-          localStorage.removeItem('user')
-          window.location.href = '/login'
+          // Unauthorized - clear auth state and redirect to login
+          // Use authStore's logout method with callApi=false to avoid infinite loop
+          const authStore = useAuthStore.getState()
+          authStore.logout(false) // Don't call API, just clear local state
           message.error('登录已过期，请重新登录')
+          // Let the auth state change trigger the redirect via ProtectedRoute
           break
 
         case 403:

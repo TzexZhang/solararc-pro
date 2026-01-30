@@ -4,9 +4,9 @@
   "description": "SolarArc Pro - High-performance urban solar analysis and visual simulation platform",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
+    "dev": "vite --mode development",
+    "build": "tsc && vite build --mode production",
+    "preview": "vite preview --mode production",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\""
   },

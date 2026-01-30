@@ -29,6 +29,9 @@ interface MapState {
   isLoading: boolean
   sidebarCollapsed: boolean
 
+  // Fly to target
+  flyToTarget: { latitude: number; longitude: number; zoom: number } | null
+
   // Actions
   setViewport: (viewport: Partial<MapViewState>) => void
   setViewMode: (mode: ViewMode) => void
@@ -44,17 +47,18 @@ interface MapState {
   setIsLoading: (loading: boolean) => void
   setSidebarCollapsed: (collapsed: boolean) => void
   resetTimeline: () => void
+  setFlyToTarget: (target: { latitude: number; longitude: number; zoom: number } | null) => void
 }
 
 export const useMapStore = create<MapState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       // Initial viewport (Beijing)
       viewport: {
         latitude: 39.9042,
         longitude: 116.4074,
         zoom: 12,
-        pitch: 0,
+        pitch: 60,
         bearing: 0
       },
 
@@ -74,6 +78,7 @@ export const useMapStore = create<MapState>()(
       selectedBuildingId: null,
       isLoading: false,
       sidebarCollapsed: false,
+      flyToTarget: null,
 
       // Actions
       setViewport: (viewport) =>
@@ -104,6 +109,11 @@ export const useMapStore = create<MapState>()(
       setIsLoading: (loading) => set({ isLoading: loading }),
 
       setSidebarCollapsed: (collapsed) => set({ sidebarCollapsed: collapsed }),
+
+      setFlyToTarget: (target) => {
+        console.log('[mapStore] setFlyToTarget 调用:', target)
+        set({ flyToTarget: target })
+      },
 
       resetTimeline: () =>
         set({

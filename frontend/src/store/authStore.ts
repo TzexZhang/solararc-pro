@@ -12,7 +12,7 @@ interface AuthState {
   // Actions
   login: (email: string, password: string) => Promise<void>
   register: (email: string, password: string, nickname?: string) => Promise<void>
-  logout: () => Promise<void>
+  logout: (callApi?: boolean) => Promise<void>
   getCurrentUser: () => Promise<void>
   updateUser: (user: User) => void
   setLoading: (loading: boolean) => void
@@ -53,11 +53,19 @@ export const useAuthStore = create<AuthState>()(
         }
       },
 
-      logout: async () => {
+      logout: async (callApi = true) => {
         set({ isLoading: true })
         try {
-          await authService.logout()
+          // Only call API if requested (e.g., user explicitly clicks logout)
+          // For 401 errors from server, just clear local state
+          if (callApi) {
+            await authService.logout()
+          }
+        } catch (error) {
+          // Ignore API errors during logout
+          console.error('Logout API error:', error)
         } finally {
+          // Always clear local state
           set({
             user: null,
             token: null,

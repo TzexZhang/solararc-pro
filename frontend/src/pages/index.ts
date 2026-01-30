@@ -1,5 +1,7 @@
 export { HomePage } from './HomePage'
 export { LoginPage } from './LoginPage'
 export { RegisterPage } from './RegisterPage'
-export { ReportsPage } from './ReportsPage'
 export { DashboardPage } from './DashboardPage'
+export { ReportsPage } from './ReportsPage'
+export { AnalysisPage } from './AnalysisPage'
+export { SettingsPage } from './SettingsPage'

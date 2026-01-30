@@ -1,15 +1,17 @@
 import React from 'react'
-import { Layout, Dropdown, Avatar, Space, Button } from 'antd'
+import { Layout, Dropdown, Avatar, Space, Button, Tooltip } from 'antd'
 import { Outlet, useNavigate, useLocation } from 'react-router-dom'
 import {
   UserOutlined,
   LogoutOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  SettingOutlined
+  SettingOutlined,
+  SunOutlined,
+  MoonOutlined
 } from '@ant-design/icons'
 import { useAuth } from '@/hooks'
-import { useMapStore } from '@/store'
+import { useMapStore, useAppStore } from '@/store'
 import './Header.css'
 
 const { Header: AntHeader } = Layout
@@ -19,6 +21,7 @@ export const Header: React.FC = () => {
   const location = useLocation()
   const { user, logout, isAuthenticated } = useAuth()
   const { sidebarCollapsed, setSidebarCollapsed } = useMapStore()
+  const { theme, toggleTheme } = useAppStore()
 
   const handleLogout = async () => {
     await logout()
@@ -30,7 +33,7 @@ export const Header: React.FC = () => {
       key: 'profile',
       icon: <UserOutlined />,
       label: '个人资料',
-      onClick: () => navigate('/profile')
+      onClick: () => navigate('/settings')
     },
     {
       key: 'settings',
@@ -62,6 +65,16 @@ export const Header: React.FC = () => {
       </div>
 
       <div className="header-right">
+        {/* 主题切换按钮 */}
+        <Tooltip title={theme === 'light' ? '切换到深色模式' : '切换到浅色模式'}>
+          <Button
+            type="text"
+            icon={theme === 'light' ? <MoonOutlined /> : <SunOutlined />}
+            onClick={toggleTheme}
+            className="theme-toggle"
+          />
+        </Tooltip>
+
         {isAuthenticated && user ? (
           <Dropdown menu={{ items: menuItems }} placement="bottomRight">
             <Space className="user-info" style={{ cursor: 'pointer' }}>

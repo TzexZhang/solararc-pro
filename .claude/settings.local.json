@@ -18,7 +18,11 @@
       "Bash(.venv/Scripts/python.exe:*)",
       "Bash(.venv/Scripts/pip.exe install:*)",
       "Bash(powershell:*)",
-      "Bash(xargs kill:*)"
+      "Bash(xargs kill:*)",
+      "mcp__web-search-prime__webSearchPrime",
+      "mcp__web-reader__webReader",
+      "Bash(.venv/Scripts/pip install:*)",
+      "Bash(.venv/Scripts/pip:*)"
     ]
   }
 }

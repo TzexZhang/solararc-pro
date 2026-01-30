@@ -1,5 +1,14 @@
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 import type { AnalysisReport, SolarPosition } from '@/types'
+
+// 检测系统主题偏好
+const getSystemTheme = (): 'light' | 'dark' => {
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    return 'dark'
+  }
+  return 'light'
+}
 
 interface AppState {
   // Global app state
@@ -30,51 +39,90 @@ interface AppState {
   setCurrentReport: (report: AnalysisReport | null) => void
   setMobile: (isMobile: boolean) => void
   setTheme: (theme: 'light' | 'dark') => void
+  toggleTheme: () => void
   incrementNotifications: () => void
   clearNotifications: () => void
 }
 
-export const useAppStore = create<AppState>((set) => ({
-  isInitialized: false,
-  isLoading: false,
+export const useAppStore = create<AppState>()(
+  persist(
+    (set, get) => ({
+      isInitialized: false,
+      isLoading: false,
 
-  solarPosition: null,
+      solarPosition: null,
 
-  reports: [],
-  currentReport: null,
+      reports: [],
+      currentReport: null,
 
-  isMobile: false,
-  theme: 'light',
+      isMobile: false,
+      theme: getSystemTheme(),
 
-  notifications: 0,
+      notifications: 0,
 
-  // Actions
-  setInitialized: (initialized) => set({ isInitialized: initialized }),
+      // Actions
+      setInitialized: (initialized) => set({ isInitialized: initialized }),
 
-  setLoading: (loading) => set({ isLoading: loading }),
+      setLoading: (loading) => set({ isLoading: loading }),
 
-  setSolarPosition: (position) => set({ solarPosition: position }),
+      setSolarPosition: (position) => set({ solarPosition: position }),
 
-  setReports: (reports) => set({ reports }),
+      setReports: (reports) => set({ reports }),
 
-  addReport: (report) =>
-    set((state) => ({ reports: [report, ...state.reports] })),
+      addReport: (report) =>
+        set((state) => ({ reports: [report, ...state.reports] })),
 
-  removeReport: (reportId) =>
-    set((state) => ({
-      reports: state.reports.filter((r) => r.id !== reportId)
-    })),
+      removeReport: (reportId) =>
+        set((state) => ({
+          reports: state.reports.filter((r) => r.id !== reportId)
+        })),
 
-  setCurrentReport: (report) => set({ currentReport: report }),
+      setCurrentReport: (report) => set({ currentReport: report }),
 
-  setMobile: (isMobile) => set({ isMobile }),
+      setMobile: (isMobile) => set({ isMobile }),
 
-  setTheme: (theme) => set({ theme }),
+      setTheme: (theme) => {
+        set({ theme })
+        // 更新 HTML 的 data-theme 属性
+        document.documentElement.setAttribute('data-theme', theme)
+      },
 
-  incrementNotifications: () =>
-    set((state) => ({ notifications: state.notifications + 1 })),
+      toggleTheme: () => {
+        const currentTheme = get().theme
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light'
+        get().setTheme(newTheme)
+      },
 
-  clearNotifications: () => set({ notifications: 0 })
-}))
+      incrementNotifications: () =>
+        set((state) => ({ notifications: state.notifications + 1 })),
+
+      clearNotifications: () => set({ notifications: 0 })
+    }),
+    {
+      name: 'app-storage',
+      partialize: (state) => ({
+        theme: state.theme,
+        isMobile: state.isMobile
+      })
+    }
+  )
+)
+
+// 初始化时应用主题
+if (typeof window !== 'undefined') {
+  const storedTheme = localStorage.getItem('app-storage')
+  if (storedTheme) {
+    try {
+      const { state } = JSON.parse(storedTheme)
+      if (state?.theme) {
+        document.documentElement.setAttribute('data-theme', state.theme)
+      }
+    } catch {
+      document.documentElement.setAttribute('data-theme', getSystemTheme())
+    }
+  } else {
+    document.documentElement.setAttribute('data-theme', getSystemTheme())
+  }
+}
 
 export default useAppStore

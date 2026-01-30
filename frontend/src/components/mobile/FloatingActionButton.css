@@ -3,6 +3,42 @@
   right: 24px;
   bottom: 24px;
   z-index: 1000;
+  animation: slideInRight 0.4s ease-out;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* 优化 FAB 按钮样式 */
+.fab-container .ant-float-btn {
+  box-shadow: 0 4px 16px rgba(24, 144, 255, 0.4);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fab-container .ant-float-btn:hover {
+  box-shadow: 0 6px 24px rgba(24, 144, 255, 0.6);
+  transform: scale(1.05);
+}
+
+.fab-container .ant-float-btn:active {
+  transform: scale(0.95);
+}
+
+/* 深色模式适配 */
+[data-theme='dark'] .fab-container .ant-float-btn {
+  box-shadow: 0 4px 16px rgba(23, 125, 220, 0.4);
+}
+
+[data-theme='dark'] .fab-container .ant-float-btn:hover {
+  box-shadow: 0 6px 24px rgba(23, 125, 220, 0.6);
 }
 
 @media (max-width: 768px) {

@@ -3,24 +3,76 @@
 }
 
 .content {
-  background: #f0f2f5;
+  background: linear-gradient(180deg, #f5f7fa 0%, #f0f2f5 100%);
   min-height: calc(100vh - 64px - 70px);
+  transition: background 0.3s ease;
 }
 
 .dashboard-content {
   padding: 24px;
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .page-title {
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 26px;
+  font-weight: 700;
   margin-bottom: 24px;
-  color: #333;
+  color: #262626;
+  position: relative;
+  padding-bottom: 12px;
+}
+
+.page-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #1890ff, #40a9ff);
+  border-radius: 2px;
 }
 
 .chart-card {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.chart-card:hover {
+  box-shadow: 0 4px 20px rgba(24, 144, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+/* 深色模式适配 */
+[data-theme='dark'] .content {
+  background: linear-gradient(180deg, #141414 0%, #0a0a0a 100%);
+}
+
+[data-theme='dark'] .page-title {
+  color: #d9d9d9;
+}
+
+[data-theme='dark'] .page-title::after {
+  background: linear-gradient(90deg, #177ddc, #3c9ae8);
+}
+
+[data-theme='dark'] .chart-card {
+  background: rgba(30, 30, 30, 0.8);
+  border-color: rgba(255, 255, 255, 0.06);
 }
 
 @media (max-width: 768px) {
@@ -33,6 +85,6 @@
   }
 
   .page-title {
-    font-size: 20px;
+    font-size: 22px;
   }
 }

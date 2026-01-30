@@ -1,5 +1,7 @@
 import { useAuthStore } from '@/store'
 import { useCallback } from 'react'
+import { useMutation } from '@tanstack/react-query'
+import { authService } from '@/services'
 
 export const useAuth = () => {
   const {
@@ -44,3 +46,13 @@ export const useAuth = () => {
 }
 
 export default useAuth
+
+/**
+ * Hook for changing password
+ */
+export const useChangePassword = () => {
+  return useMutation({
+    mutationFn: (data: { oldPassword: string; newPassword: string }) =>
+      authService.changePassword(data)
+  })
+}

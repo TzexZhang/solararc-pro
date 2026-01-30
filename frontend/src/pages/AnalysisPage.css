@@ -1,0 +1,30 @@
+.analysis-page {
+  min-height: 100vh;
+}
+
+.analysis-content {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.analysis-config-card {
+  margin-bottom: 16px;
+}
+
+.analysis-info-card {
+  margin-top: 16px;
+}

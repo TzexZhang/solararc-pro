@@ -1,0 +1,19 @@
+.settings-page {
+  min-height: 100vh;
+}
+
+.settings-content {
+  padding: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.settings-card {
+  margin-bottom: 16px;
+}
