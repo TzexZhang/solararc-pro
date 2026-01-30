@@ -5,7 +5,16 @@
       "Bash(tree:*)",
       "Bash(npm run build:*)",
       "Bash(python:*)",
-      "Bash(.venvScriptspython -c \"from app.models import User; print\\(''Success''\\)\")"
+      "Bash(.venvScriptspython -c \"from app.models import User; print\\(''Success''\\)\")",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(mysql:*)",
+      "Bash(curl:*)",
+      "Bash(taskkill:*)",
+      "Bash(timeout:*)",
+      "Bash(where:*)",
+      "Bash(C:\\\\Users\\\\ztz\\\\AppData\\\\Local\\\\Microsoft\\\\WindowsApps\\\\python.exe:*)",
+      "Bash(\"/c/Users/ztz/AppData/Local/Microsoft/WindowsApps/python.exe\" --version)"
     ]
   }
 }

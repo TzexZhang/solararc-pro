@@ -65,13 +65,26 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src')
     }
   },
+  optimizeDeps: {
+    include: [
+      'react-map-gl',
+      'mapbox-gl'
+    ],
+    esbuildOptions: {
+      target: 'es2020',
+      banner: {
+        js: '// @preserve exports; export * from "mapbox-gl";',
+      }
+    }
+  },
   server: {
     port: 3000,
     proxy: {
       '/api': {
-        target: 'http://localhost:8000',
+        target: 'http://127.0.0.1:8000',
         changeOrigin: true,
-        secure: false
+        secure: false,
+        rewrite: (path) => path.replace(/^\/api/, '/api/v1/')
       }
     }
   },
@@ -80,12 +93,14 @@ export default defineConfig({
     sourcemap: false,
     rollupOptions: {
       output: {
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'ui-vendor': ['antd', 'antd-mobile'],
-          'map-vendor': ['mapbox-gl', 'deck.gl'],
-          'chart-vendor': ['echarts', 'echarts-for-react', 'recharts'],
-          'utils': ['dayjs', 'axios', 'lodash-es']
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            return {
+              vendor: ['react', 'react-dom', 'react-router-dom', 'react-map-gl', 'mapbox-gl'],
+              ui: ['antd', 'antd-mobile'],
+              charts: ['echarts', 'echarts-for-react', 'recharts']
+            }[id]
+          }
         }
       }
     },

@@ -6,7 +6,7 @@ import {
   DashboardOutlined,
   FileTextOutlined,
   SettingOutlined,
-  AnalysisOutlined
+  LineChartOutlined
 } from '@ant-design/icons'
 import { useAuth } from '@/hooks'
 import './Sidebar.css'
@@ -45,7 +45,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
           },
           {
             key: '/analysis',
-            icon: <AnalysisOutlined />,
+            icon: <LineChartOutlined />,
             label: '日照分析',
             onClick: () => navigate('/analysis')
           }
